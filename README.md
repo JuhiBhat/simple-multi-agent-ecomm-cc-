@@ -16,7 +16,7 @@ inside a microservices architecture and reach the business services only through
 
 ## Prerequisites
 - Docker Desktop (running)
-- An OpenAI API key (the course's Vocareum key works) or a local Ollama instance
+- An OpenAI API key or a local Ollama instance
 
 ## Setup & Deployment
 
@@ -25,9 +25,8 @@ inside a microservices architecture and reach the business services only through
    MODEL_TYPE=openai
    OPENAI_API_KEY=your-key-here
    OPENAI_MODEL=gpt-4o-mini
-   OPENAI_BASE_URL=https://openai.vocareum.com/v1
+   OPENAI_BASE_URL=xx
    ```
-   - **Vocareum course key:** keep `OPENAI_BASE_URL` as shown (this is what the class Zomato project uses).
    - **Personal key from platform.openai.com:** delete the `OPENAI_BASE_URL` line.
 
 2. **Deploy the microservices.** The first build takes about 5 minutes.
@@ -99,7 +98,7 @@ This prints an escalation scorecard (accuracy, false positives, false negatives)
   - `escalation_service/`: escalation rules and the human review ticket queue (port 8004).
 - `frontend/`: Streamlit chat UI (port 8501).
 - `tests/run_samples.py`: runs the 10 sample cases against the API and scores them.
-- `notebook/ecommerce_crew.ipynb`: standalone, step-by-step version of the same crew (no Docker), for learning or for Vocareum.
+- `notebook/ecommerce_crew.ipynb`: standalone, step-by-step version of the same crew (no Docker)
 - `docker-compose.yml`: binds the 6 services together over a shared Docker network.
 - `deploy.sh` / `deploy.ps1`: build and deployment scripts.
 
@@ -107,7 +106,6 @@ This prints an escalation scorecard (accuracy, false positives, false negatives)
 
 | Problem | Fix |
 |---|---|
-| Chat shows *Agent error ... AuthenticationError* | Wrong key, or a mismatch: Vocareum key needs `OPENAI_BASE_URL=https://openai.vocareum.com/v1`; a personal key needs that line removed. Then run `docker compose up -d --force-recreate agent` |
 | *Failed to reach the agent service* | The agent container is still starting or crashed: `docker compose logs agent` |
 | Changed `.env` but nothing changed | Containers read `.env` at start: `docker compose up -d --force-recreate agent` |
 | Port already in use | Another app uses 8000–8004 or 8501. Stop it, or change the left-hand port in `docker-compose.yml` |
