@@ -5,8 +5,6 @@ A goal-oriented, multi-agent e-commerce support system for **order, refund & exc
 apply the refund policy, recommend a resolution and decide whether a human must approve it. The agents run
 inside a microservices architecture and reach the business services only through an MCP server.
 
-*Week 12 Graded Mini Project, Use Case 2: E-Commerce Order, Refund & Exception Handling.*
-
 ## Features
 - **4-agent CrewAI workflow** with structured handoffs (Issue Identification → Policy Interpretation → Resolution Recommendation → Escalation)
 - **Deterministic policy engine** (rules R1–R9: damage windows, return windows, non-returnable items, delay compensation, Gold goodwill exceptions)
