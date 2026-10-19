@@ -1,0 +1,73 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "8501:8501"
+    environment:
+      - BACKEND_URL=http://agent:8000
+    depends_on:
+      - agent
+
+  agent:
+    build:
+      context: .
+      dockerfile: agent/Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - MCP_SERVER_URL=http://mcp_server:8003/sse
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # lets the agent reach Ollama on your computer
+    depends_on:
+      - mcp_server
+
+  mcp_server:
+    build:
+      context: .
+      dockerfile: mcp_server/Dockerfile
+    ports:
+      - "8003:8003"
+    environment:
+      - ORDER_SERVICE_URL=http://order_service:8001
+      - POLICY_SERVICE_URL=http://policy_service:8002
+      - ESCALATION_SERVICE_URL=http://escalation_service:8004
+      - PORT=8003
+    depends_on:
+      - order_service
+      - policy_service
+      - escalation_service
+
+  order_service:
+    build:
+      context: .
+      dockerfile: mock_services/order_service/Dockerfile
+    ports:
+      - "8001:8001"
+
+  policy_service:
+    build:
+      context: .
+      dockerfile: mock_services/policy_service/Dockerfile
+    ports:
+      - "8002:8002"
+    environment:
+      - ORDER_SERVICE_URL=http://order_service:8001
+    depends_on:
+      - order_service
+
+  escalation_service:
+    build:
+      context: .
+      dockerfile: mock_services/escalation_service/Dockerfile
+    ports:
+      - "8004:8004"
+    environment:
+      - ORDER_SERVICE_URL=http://order_service:8001
+      - POLICY_SERVICE_URL=http://policy_service:8002
+    depends_on:
+      - order_service
+      - policy_service

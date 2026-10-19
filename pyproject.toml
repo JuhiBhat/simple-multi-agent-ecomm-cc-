@@ -1,0 +1,18 @@
+[project]
+name = "shopkart-customercare-crew"
+version = "0.1.0"
+description = "Goal-oriented multi-agent e-commerce refund & escalation workflow (CrewAI + MCP + FastAPI microservices)"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "crewai==1.15.28",
+    "crewai-tools[mcp]==1.15.28",
+    "mcp==1.28.1",
+    "fastapi==0.143.3",
+    "uvicorn==0.53.0",
+    "pydantic==2.12.5",
+    "sqlalchemy==2.1.5",
+    "requests==2.34.2",
+    "streamlit==1.66.0",
+    "pandas==3.0.5",
+]
